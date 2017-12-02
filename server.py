@@ -14,13 +14,13 @@ app.debug = True
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 thread = None
-ser = serial.Serial('/dev/tty.usbserial-141',9600)
+#ser = serial.Serial('/dev/tty.usbserial-141',9600)
 
 def loop_forever():
-    read_byte = ser.read(2)
+    #read_byte = ser.read(2)
     socketio.emit('message', {'data': 'This is data', 'time': read_byte.decode('ascii')}, namespace='/test')
     while read_byte is not None:
-	read_byte = ser.read(2)
+	#read_byte = ser.read(2)
         socketio.emit('message', {'data': 'This is data', 'time': read_byte.decode('ascii')}, namespace='/test')
 	print read_byte.decode("ascii")
 
@@ -28,10 +28,10 @@ def background_stuff():
      """ python code in main.py """
      print('In background_stuff')
      while True:
-         time.sleep(1)
-         print("sleeping")
-        #  t = str(randint(40,90))
-        #  socketio.emit('message', {'data': 'This is data', 'time': t}, namespace='/test')
+        time.sleep(1)
+        print("sleeping")
+        t = str(randint(40,90))
+        socketio.emit('message', {'data': 'This is data', 'time': t}, namespace='/test')
 
 @app.route('/lib/<path:path>')
 def send_js(path):
