@@ -1,4 +1,4 @@
-# telemetry-dash
+# Sensor Data Dashboard for Chase Car
 # Instructions
 **To get this server up and running on your local machine, follow the steps below**
 1) Install python if you don't already have it
