@@ -9,9 +9,14 @@
 4) Create a new virtual environment
 ```virtualenv env```
 5) Activate the current environment
-```source /env/bin/activate```
+```source env/bin/activate```
 6) Install the project requirements
 ```pip install -r requirements.txt```
 7) Start the server
 ```python server.py```
 8) Open **localhost:5000** in a web browser to verify that it's running
+
+Once this has been set up for the first time, getting the server running only requrires two steps
+
+```source env/bin/activate```
+```python server.py```
