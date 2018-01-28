@@ -19,4 +19,5 @@
 Once this has been set up for the first time, getting the server running only requrires two steps
 
 ```source env/bin/activate```
+
 ```python server.py```
