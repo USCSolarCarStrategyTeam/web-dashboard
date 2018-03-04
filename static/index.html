@@ -2,6 +2,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="lib/c3.min.css" />
+     <!--tabs-->
     <script type="text/javascript" src="lib/jquery.js"></script>
     <script type="text/javascript" src="lib/socket.io.min.js"></script>
     <script type="text/javascript" src="lib/gauge.min.js"></script>
@@ -16,15 +17,98 @@
     #time-series2 .c3-legend-item text { stroke: blue; }
     </style>
 </head>
+<style>
+  /* Style the tab */
+  .tab {
+      overflow: hidden;
+      border: 1px solid #ccc;
+      background-color: #f1f1f1;
+  }
+
+  /* Style the buttons that are used to open the tab content */
+  .tab button {
+      background-color: inherit;
+      float: left;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 14px 16px;
+      transition: 0.3s;
+  }
+
+  /* Change background color of buttons on hover */
+  .tab button:hover {
+      background-color: #ddd;
+  }
+
+  /* Create an active/current tablink class */
+  .tab button.active {
+      background-color: #ccc;
+  }
+
+  /* Style the tab content */
+  .tabcontent {
+      display: none;
+      padding: 6px 12px;
+      border: none;
+      border-top: none;
+  }
+</style>
+<script>
+    function openGraph(evt, graphName) {
+      // Declare all variables
+      var i, tabcontent, tablinks;
+
+      // Get all elements with class="tabcontent" and hide them
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+      }
+
+      // Get all elements with class="tablinks" and remove the class "active"
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+
+      // Show the current tab, and add an "active" class to the button that opened the tab
+      document.getElementById(graphName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+  </script>
 
 <body style="background-color:#000000; color:white; text-align:center;">
       <h3>Car Dashboard</h3>
-      <div style="width:200px; height:200px; margin:20px; position: relative;">
+      <div style="width:200px; height:200px; margin:20px; position: absolute; left: 30%; top: 20%;">
         <div id="label" style="font-weight: bold; color:white; text-align: center;font-size: 16pt;"></div>
         <canvas id='speed' width="400" height="300" style=" position: relative; display: inline-block;width:200px; height:100px"/>
       </div>
-      <div id="time-series" style="width: 45%; float: left; margin: 1%;"></div>
-      <div id="time-series2" style="width: 45%; float: right; margin: 1%;"></div>
+      <!-- Tab links -->
+      <div class="tab">
+        <button class="tablinks" onclick="openGraph(event, 'Battery')">Battery</button>
+        <button class="tablinks" onclick="openGraph(event, 'SolarArray')">Solar Array</button>
+        <button class="tablinks" onclick="openGraph(event, 'Motor')">Motor</button>
+      </div>
+
+      <!-- Tab content -->
+      <div id="Battery" class="tabcontent"> <!--default tab-->
+        <script> document.getElementById("Battery").click(); </script>
+        <h3>Battery</h3>
+        <div id="time-series" style="width: 45%; float: left; margin: 1%;"></div>
+      </div>
+
+      <div id="SolarArray" class="tabcontent">
+        <h3>SolarArray</h3>
+        <div id="time-series2" style="width: 45%; float: right; margin: 1%;"></div>
+      </div>
+
+      <div id="Motor" class="tabcontent">
+        <h3>Motor</h3>
+      </div>
+      <div style="width:200px; height:200px; margin:20px; position: absolute; left: 30%; top: 20%;">
+        <div id="label" style="font-weight: bold; color:white; text-align: center;font-size: 16pt;"></div>
+        <canvas id='speed' width="400" height="300" style=" position: relative; display: inline-block;width:200px; height:100px"/>
+      </div>
         <script>
             var chartData = ['data1', 0, 0, 0, 0, 0, 0];
             var chart = c3.generate({
