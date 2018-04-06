@@ -120,7 +120,7 @@ class Dashboard(QWidget):
 
 
         #Configure colors
-        textSS = "QLabel { color: gold; }"
+        textSS = "QLabel { color: white; }"
         lbl1.setStyleSheet(textSS)
         lbl2.setStyleSheet(textSS)
         lbl3.setStyleSheet(textSS)
@@ -128,7 +128,7 @@ class Dashboard(QWidget):
         lbl5.setStyleSheet(textSS)
         lbl6.setStyleSheet(textSS)
 
-        valueSS = "QLabel { color: black; }"
+        valueSS = "QLabel { color: white; }"
         self.currSpeed.setStyleSheet(valueSS)
         self.currRange.setStyleSheet(valueSS)
         self.currBatt.setStyleSheet(valueSS)
@@ -136,7 +136,7 @@ class Dashboard(QWidget):
         self.currCurrent.setStyleSheet(valueSS)
         self.currPower.setStyleSheet(valueSS)
 
-        unitSS = "QLabel { color: black; }"
+        unitSS = "QLabel { color: white; }"
         speedUnit.setStyleSheet(valueSS)
         rangeUnit.setStyleSheet(valueSS)
         battUnit.setStyleSheet(valueSS)
@@ -154,7 +154,8 @@ class Dashboard(QWidget):
 
 
         #Configure dash color
-        col = QColor(189, 32, 49)   #cardinal
+        col = QColor(0, 0, 0)   #black
+        # col = QColor(189, 32, 49)   #cardinal
         # col = QColor(169,169,169)   #grey
         p = self.palette()
         p.setColor(self.backgroundRole(), col)
