@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="lib/c3.min.css" />
+    <script type="text/javascript" src="lib/jquery.js"></script>
+    <script type="text/javascript" src="lib/socket.io.min.js"></script>
+    <script type="text/javascript" src="lib/gauge.min.js"></script>
+    <script type="text/javascript" src="lib/d3-3.5.6.min.js"></script>
+    <script type="text/javascript" src="lib/c3.min.js"></script>
+    <style>
+    #time-series path.domain { stroke: white; }
+    #time-series .tick text { stroke: yellow; }
+    #time-series .c3-legend-item text { stroke: yellow; }
+    #time-series2 path.domain { stroke: white; }
+    #time-series2 .tick text { stroke: blue; }
+    #time-series2 .c3-legend-item text { stroke: blue; }
+    #batterygauge .c3-gauge-value { fill: #fff }
+
+    .left {color:green; }
+    </style>
+</head>
+
+<body style="background-color:#000000; color:white; text-align:center;">
+      <h3>Car Dashboard</h3>
+      
+      
+      <div style="width:200px; height:200px; margin:20px; position: relative;">
+      
+        <div id="label" style="font-weight: bold; color:white; text-align: center;font-size: 16pt;"></div>
+        
+        <canvas id='speed' width="400" height="300" style=" position: relative; display: inline-block;width:200px; height:100px"/>
+        
+        
+        
+      </div>
+      <div style = "position: relative; text-align: left; margin-left: 100px; margin-top: -80px; "> Speed </div>
+      <br>
+      <br>
+      <div id="batterygauge" style="width: 40%; margin-left: -10%;"></div>
+      <br>
+      <div id="label2" style="font-weight: bold; color:white; text-align: center;font-size: 10pt;"></div>
+      <br>
+      <div style = "position: relative; text-align: left; "> Amps:  </div>
+      <br>
+      
+      <div style = "position: relative; text-align: left; "> Power:  </div>
+      <br>
+      
+      <div id="time-series" style="width: 45%; float: left; margin: 1%;"></div>
+      
+      <div id="time-series2" style="width: 45%; float: right; margin: 1%;"></div>
+      
+       <div style="width:200px; height:200px; margin:20px; position: relative;">
+      
+      <div id="label3" style="font-weight: bold; color:white; font-size: 16pt;"></div>
+        
+        <canvas id='foo' width="400" height="300" style="float: right; width:200px; height:100px; "/>
+        
+              <div id="label4" style="font-weight: bold; color:white; font-size: 16pt;"></div>
+        
+        <canvas id='speed4' width="400" height="300" style="float: center; width:200px; height:100px; "/>
+
+        
+      </div>
+      
+      
+        <script>
+
+            var chartData = ['data1', 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0 ,0, 0];
+            var chart = c3.generate({
+                bindto: '#time-series',
+                data: {
+                    x: 'x',
+                    columns: [
+                        ['x', '2013-01-01', '2013-01-02', '2013-01-03', '2013-01-04', '2013-01-05', '2013-01-06', '2013-01-07', '2013-01-08', '2013-01-09', '2013-01-10', '2013-01-11', '2013-01-12', '2013-01-13', '2013-01-14'],
+                        ['data1', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0]
+                    ]
+                },
+                axis: {
+                
+                    x: {
+                        type: 'timeseries',
+                        tick: {
+                            format: '%Y-%m-%d'
+                        }
+                        
+                   
+                    }
+                },
+                color: {
+                    pattern: ['yellow']
+                }
+            });
+            
+            
+
+
+            var chartData2 = ['data1', 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0 ,0, 0];
+            var chart2 = c3.generate({
+                bindto: '#time-series2',
+                data: {
+                    x: 'x',
+                    columns: [
+                        ['x', '2013-01-01', '2013-01-02', '2013-01-03', '2013-01-04', '2013-01-05', '2013-01-06', '2013-01-07', '2013-01-08', '2013-01-09', '2013-01-10', '2013-01-11', '2013-01-12', '2013-01-13', '2013-01-14'],
+                        ['data1', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0]
+                    ]
+                },
+                axis: {
+                
+                    x: {
+                        type: 'timeseries',
+                        tick: {
+                            format: '%Y-%m-%d'
+                        }
+                        
+                   
+                    }
+                },
+                color: {
+                    pattern: ['blue']
+                }
+            });
+
+            var gauge
+            var voltage
+            $(document).ready(function(){
+
+                namespace = '/test'; // change to an empty string to use the global namespace
+                // the socket.io documentation recommends sending an explicit package upon connection
+                // this is specially important when using the global namespace
+                var socket = io.connect('http://' + document.domain + ':' + location.port + namespace);
+
+                socket.on('connect', function(msg) {
+                    socket.emit('my event', {data: 'I\'m connected!'});
+                });
+
+                socket.on('message', function(msg){
+                    gauge.set(msg.time)
+                    gauge2.set(msg.time)
+                    console.log(msg.time)
+                    chartData.splice(1, 1);
+                    chartData.push(msg.time);
+                    chart.load({
+                        columns: [ chartData ]
+                    });
+                    chartData2.splice(1, 1);
+                    chartData2.push(msg.time%50);
+                    chart2.load({
+                        columns: [ chartData2 ]
+                        
+                    });
+                    
+                    chart4.load({
+        columns: [['data', msg.time]]
+    });
+
+                    //$('#test').html('<p>' + msg.time + '</p>');
+                });
+
+            });
+            
+
+            var opts = {
+              angle: -0.25, // The span of the gauge arc
+              lineWidth: 0.2, // The line thickness
+              pointer: {
+                length: 0.6, // // Relative to gauge radius
+                strokeWidth: 0.06, // The thickness
+                color: '#FFFFFF' // Fill color
+              },
+              limitMax: false,     // If false, max value increases automatically if value > maxValue
+              limitMin: false,     // If true, the min value of the gauge will be fixed
+              // colorStart: '#6FADCF',   // Colors
+              // colorStop: '#8FC0DA',    // just experiment with them
+              // strokeColor: '#E0E0E0',  // to see which ones work best for you
+              // generateGradient: true,
+              highDpiSupport: true,     // High resolution support
+              staticLabels: {
+                font: "10px sans-serif",  // Specifies font
+                labels: [0, 10, 20, 70, 80 ,90],  // Print labels at these values
+                color: "#FFFFFF",  // Optional: Label text color
+                fractionDigits: 0  // Optional: Numerical precision. 0=round off.
+              },
+              staticZones: [
+                 {strokeStyle: "#F03E3E", min: 0, max: 5}, // Red from 100 to 130
+                 {strokeStyle: "#FFDD00", min: 5, max: 15}, // Yellow
+                 {strokeStyle: "#30B32D", min: 15, max: 70}, // Green
+                 {strokeStyle: "#FFDD00", min: 70, max: 80}, // Yellow
+                 {strokeStyle: "#F03E3E", min: 80, max: 100}  // Red
+              ],
+            };
+
+            $(document).ready(function(){
+              var target = document.getElementById('speed'); // your canvas element
+              var label = document.getElementById('label');
+              var target2 = document.getElementById('foo'); // your canvas element
+              var label2 = document.getElementById('label3');
+
+              
+              gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
+              gauge2 = new Gauge(target2).setOptions(opts); // create sexy gauge!
+              gauge.maxValue = 100; // set max gauge value
+              gauge.setMinValue(0);  // Prefer setter over gauge.minValue = 0
+              gauge.animationSpeed = 32; // set animation speed (32 is default value)
+              gauge.set(80); // set actual value
+              gauge.setTextField(label);
+              
+              gauge2.maxValue = 100; // set max gauge value
+              gauge2.setMinValue(0);  // Prefer setter over gauge.minValue = 0
+              gauge2.animationSpeed = 32; // set animation speed (32 is default value)
+              gauge2.set(80); // set actual value
+              gauge2.setTextField(label2);
+              voltage.setTextField(label2);
+              
+            });
+   	         
+
+            
+        </script>
+        
+        <script>
+        
+		var chart4 = c3.generate({
+		bindto: '#batterygauge',
+    	data: {
+        columns: [
+            ['data', 91.4]
+        ],
+        type: 'gauge',
+        onclick: function (d, i) { console.log("onclick", d, i); },
+        onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+        onmouseout: function (d, i) { console.log("onmouseout", d, i); }
+    	},
+    	gauge: {
+//        label: {
+//            format: function(value, ratio) {
+//                return value;
+//            },	
+//        },
+//    min: 0, // 0 is default, //can handle negative min e.g. vacuum / voltage / current flow / rate of change
+//    max: 100, // 100 is default
+//    units: ' %',
+   
+ 	width: 39 // for adjusting arc thickness
+    },
+    color: {
+    pattern: ['#FF0000', '#F97600', '#F6C600', '#60B044'], // the three color levels for the percentage values.
+    threshold: {
+//            unit: 'value', // percentage is default
+//            max: 200, // 100 is default
+    values: [30, 60, 90, 100]
+        }
+    },
+    size: {
+        height: 150
+    }
+});
+
+
+
+
+        
+        </script>
+        
+        
+
+</body>
+</html>
