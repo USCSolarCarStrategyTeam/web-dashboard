@@ -246,7 +246,7 @@ class Dashboard(QWidget):
             self.currTemp.move(660 * w / 800, 55 * h / 480)
             self.currCurrent.move(660 * w / 800, 205 * h / 480)
             self.currPower.move(660 * w / 800, 350 * h / 480)
-
+            
             #LABELS spacings & sizings
             self.lbl1.move(25 * w / 800, 25 * h / 480)
             self.lbl2.move(25 * w / 800, 270 * h / 480)
@@ -262,7 +262,7 @@ class Dashboard(QWidget):
             self.tempUnit.move(740 * w / 800, 92 * h / 480)
             self.currentUnit.move(740 * w / 800, 242 * h / 480)
             self.powerUnit.move(740 * w / 800, 387 * h / 480)
-            
+
             #BATTERY spacing & sizing
             self.batteryImage.move(300 * w / 800, 115 * h / 480)
             
