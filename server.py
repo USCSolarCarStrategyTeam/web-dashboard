@@ -34,7 +34,7 @@ def loop_forever():
     socketio.emit('message', {'data': 'This is data', 'time': read_byte.decode('ascii')}, namespace='/test')
     socketio.emit('message2', {'data2': 'This is data', 'time': read_byte.decode('ascii')}, namespace='/test')
     while read_byte is not None:
-	#read_byte = ser.read(2)
+		#read_byte = ser.read(2)
         socketio.emit('message', {'data': 'This is data', 'time': read_byte.decode('ascii')}, namespace='/test')
         socketio.emit('message2', {'data2': 'This is data', 'time': read_byte.decode('ascii')}, namespace='/test')
 	print read_byte.decode("ascii")
@@ -46,31 +46,16 @@ def background_stuff():
      """ python code in main.py """
      print('In background_stuff')
      random.seed(datetime.now())
-     myList = [0,0,0,0,0];
-     counter = 0;
+     ser = serial.Serial(port='/dev/tty.usbserial-1413',baudrate = 9600)
+     myList = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
      while True:
-     	ser = serial.Serial(port='/dev/tty.usbserial-1412',baudrate = 9600)
-     	data1 = ser.readline();
-     	#value = int(data1);
-     	counter = counter + 1;
-     	# while (counter < 25):
-#      		myList[counter] = data1;
-#      		counter= counter+1;
-        #time.sleep(0.5)
-        #print("sleeping")
-        #t = str(randint(40,90))
-        #t = myList[counter];
-        #if counter == 6: counter = 0;
-        for z in range(0, 23):
-        	data1 = ser.readline();
-        	socketio.emit('message', {'data': 'This is data', 'time': data1}, namespace='/test')
-        for z in range(0, 4):
-        	data1 = ser.readline();
-        	socketio.emit('message', {'data2': 'This is data', 'time': data1}, namespace='/test')
-        x = str(randint(60,70));
-        y = str(randint(-10,10));
-        socketio.emit('message', {'data': 'This is data', 'time': y}, namespace='/test')
-        socketio.emit('message2', {'data2': 'This is data', 'time': x}, namespace='/test')
+     	for z in range(0, 25):
+     		data1 = ser.readline();
+     		myList[z] = data1;
+     	time.sleep(0.25);
+     	y = str(randint(-10,10));
+     	socketio.emit('message', {'data': 'This is data', 'time': myList}, namespace='/test')
+#         socketio.emit('message2', {'data2': 'This is data', 'time': x}, namespace='/test')
         
 
 @app.route('/lib/<path:path>')
@@ -102,3 +87,24 @@ app.run()
 # def root():
 #     return app.send_static_file('index.html')
 # app.run()
+
+     	#ser = serial.Serial(port='/dev/tty.usbserial-1412',baudrate = 9600)
+     	#data1 = ser.readline();
+     	#value = int(data1);
+     	#counter = counter + 1;
+     	# while (counter < 25):
+#      		myList[counter] = data1;
+#      		counter= counter+1;
+        #time.sleep(0.5)
+        #print("sleeping")
+        #t = str(randint(40,90))
+        #t = myList[counter];
+        #if counter == 6: counter = 0;
+        #for z in range(0, 24):
+        	#data1 = ser.readline();
+        	#x = str(randint(60,70));
+        	#myList[z] = data1;
+        	#socketio.emit('message', {'data': 'This is data', 'time': data1}, namespace='/test')
+#         for z in range(0, 4):
+#         	data1 = ser.readline();
+#         	socketio.emit('message', {'data2': 'This is data', 'time': data1}, namespace='/test')
