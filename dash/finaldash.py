@@ -22,9 +22,9 @@ class Dashboard(QWidget):
         self.timer.timeout.connect(self.getSpeed)
         self.timer.timeout.connect(self.getRange)
         self.timer.timeout.connect(self.getBatt)
-        self.timer.timeout.connect(self.getTemp)
-        self.timer.timeout.connect(self.getCurrent)
-        self.timer.timeout.connect(self.getPower)       
+        # self.timer.timeout.connect(self.getTemp)
+        # self.timer.timeout.connect(self.getCurrent)
+        # self.timer.timeout.connect(self.getPower)       
         self.timer.timeout.connect(self.adjustScaling)
 
         self.timer.start(1000)
@@ -42,14 +42,14 @@ class Dashboard(QWidget):
         self.lbl3 = QLabel("Battery Level", self)
         self.lbl3.move(320, 230)
 
-        self.lbl4 = QLabel("Cabin Temperature", self)
-        self.lbl4.move(540, 25)
+        # self.lbl4 = QLabel("Cabin Temperature", self)
+        # self.lbl4.move(540, 25)
 
-        self.lbl5 = QLabel("Motor Current", self)
-        self.lbl5.move(595, 175)
+        # self.lbl5 = QLabel("Motor Current", self)
+        # self.lbl5.move(595, 175)
 
-        self.lbl6 = QLabel("Power", self)
-        self.lbl6.move(680, 320)
+        # self.lbl6 = QLabel("Power", self)
+        # self.lbl6.move(680, 320)
 
 
         #Values
@@ -61,24 +61,24 @@ class Dashboard(QWidget):
         self.currRange.move(25, 300)
 
         self.currBatt = QLabel("0   ", self)
-        self.currBatt.move(290, 240)
+        self.currBatt.move(400, 240)
 
-        self.currTemp = QLabel("0   ", self)
-        self.currTemp.move(660, 55)
+        # self.currTemp = QLabel("0   ", self)
+        # self.currTemp.move(660, 55)
 
-        self.currCurrent = QLabel("0   ", self)
-        self.currCurrent.move(660, 205)
+        # self.currCurrent = QLabel("0   ", self)
+        # self.currCurrent.move(660, 205)
 
-        self.currPower = QLabel("0   ", self)
-        self.currPower.move(660, 350)
+        # self.currPower = QLabel("0   ", self)
+        # self.currPower.move(660, 350)
 
 
         #Units
         self.speedUnit = QLabel("mph", self)
-        self.speedUnit.move(175, 150)
+        self.speedUnit.move(500, 150)
         
         self.rangeUnit = QLabel("mi.", self)
-        self.rangeUnit.move(175, 395)
+        self.rangeUnit.move(500, 395)
 
         self.battUnit = QLabel("%", self)
         self.battUnit.move(505, 278)
@@ -86,39 +86,39 @@ class Dashboard(QWidget):
         self.tempUnit = QLabel("°F", self)
         self.tempUnit.move(740, 92)
 
-        self.currentUnit = QLabel("A", self)
-        self.currentUnit.move(740, 242)
+        # self.currentUnit = QLabel("A", self)
+        # self.currentUnit.move(740, 242)
 
-        self.powerUnit = QLabel("W", self)
-        self.powerUnit.move(740, 387)
+        # self.powerUnit = QLabel("W", self)
+        # self.powerUnit.move(740, 387)
 
 
         #Configure fonts
-        textFont = QFont("Arial", 20)
+        textFont = QFont("Arial", 60)
         self.lbl1.setFont(textFont)
         self.lbl2.setFont(textFont)
         self.lbl3.setFont(textFont)
-        self.lbl4.setFont(textFont)
-        self.lbl5.setFont(textFont)
-        self.lbl6.setFont(textFont)
+        # self.lbl4.setFont(textFont)
+        # self.lbl5.setFont(textFont)
+        # self.lbl6.setFont(textFont)
 
-        valueFontS = QFont("Arial", 50)
-        valueFontM = QFont("Arial", 100)
-        valueFontL = QFont("Arial", 150)
+        valueFontS = QFont("Arial", 150)
+        valueFontM = QFont("Arial", 250)
+        valueFontL = QFont("Arial", 400)
         self.currSpeed.setFont(valueFontM)
         self.currRange.setFont(valueFontM)
         self.currBatt.setFont(valueFontL)
-        self.currTemp.setFont(valueFontS)
-        self.currCurrent.setFont(valueFontS)
-        self.currPower.setFont(valueFontS)
+        # self.currTemp.setFont(valueFontS)
+        # self.currCurrent.setFont(valueFontS)
+        # self.currPower.setFont(valueFontS)
 
-        unitFont = QFont("Arial", 20)
+        unitFont = QFont("Arial", 40)
         self.speedUnit.setFont(unitFont)
         self.rangeUnit.setFont(unitFont)
-        self.battUnit.setFont(unitFont)
-        self.tempUnit.setFont(unitFont)
-        self.currentUnit.setFont(unitFont)
-        self.powerUnit.setFont(unitFont)
+        self.battUnit.setFont(QFont("Arial", 80))
+        # self.tempUnit.setFont(unitFont)
+        # self.currentUnit.setFont(unitFont)
+        # self.powerUnit.setFont(unitFont)
 
 
         #Configure colors
@@ -126,30 +126,30 @@ class Dashboard(QWidget):
         self.lbl1.setStyleSheet(textSS)
         self.lbl2.setStyleSheet(textSS)
         self.lbl3.setStyleSheet(textSS)
-        self.lbl4.setStyleSheet(textSS)
-        self.lbl5.setStyleSheet(textSS)
-        self.lbl6.setStyleSheet(textSS)
+        # self.lbl4.setStyleSheet(textSS)
+        # self.lbl5.setStyleSheet(textSS)
+        # self.lbl6.setStyleSheet(textSS)
 
         valueSS = "QLabel { color: white; }"
         self.currSpeed.setStyleSheet(valueSS)
         self.currRange.setStyleSheet(valueSS)
         self.currBatt.setStyleSheet(valueSS)
-        self.currTemp.setStyleSheet(valueSS)
-        self.currCurrent.setStyleSheet(valueSS)
-        self.currPower.setStyleSheet(valueSS)
+        # self.currTemp.setStyleSheet(valueSS)
+        # self.currCurrent.setStyleSheet(valueSS)
+        # self.currPower.setStyleSheet(valueSS)
 
         unitSS = "QLabel { color: white; }"
         self.speedUnit.setStyleSheet(valueSS)
         self.rangeUnit.setStyleSheet(valueSS)
         self.battUnit.setStyleSheet(valueSS)
-        self.tempUnit.setStyleSheet(valueSS)
-        self.currentUnit.setStyleSheet(valueSS)
-        self.powerUnit.setStyleSheet(valueSS)
+        # self.tempUnit.setStyleSheet(valueSS)
+        # self.currentUnit.setStyleSheet(valueSS)
+        # self.powerUnit.setStyleSheet(valueSS)
 
 
         #Battery image
         battMap = QPixmap("batteries/battery24.png")
-        battMap = battMap.scaledToHeight(96)
+        battMap = battMap.scaledToHeight(150)
         self.batteryImage = QLabel(self)
         self.batteryImage.setPixmap(battMap)
         self.batteryImage.move(300, 115)
@@ -242,29 +242,29 @@ class Dashboard(QWidget):
             #VALUES spacings & sizings
             self.currSpeed.move(25 * w / 800, 55 * h / 480)
             self.currRange.move(25 * w / 800, 300 * h / 480)
-            self.currBatt.move(290 * w / 800, 240 * h / 480)
-            self.currTemp.move(660 * w / 800, 55 * h / 480)
-            self.currCurrent.move(660 * w / 800, 205 * h / 480)
-            self.currPower.move(660 * w / 800, 350 * h / 480)
+            self.currBatt.move(400 * w / 800, 230 * h / 480)
+            # self.currTemp.move(660 * w / 800, 55 * h / 480)
+            # self.currCurrent.move(660 * w / 800, 205 * h / 480)
+            # self.currPower.move(660 * w / 800, 350 * h / 480)
             
             #LABELS spacings & sizings
             self.lbl1.move(25 * w / 800, 25 * h / 480)
             self.lbl2.move(25 * w / 800, 270 * h / 480)
-            self.lbl3.move(320 * w / 800, 230 * h / 480)
-            self.lbl4.move(540 * w / 800, 25 * h / 480)
-            self.lbl5.move(595 * w / 800, 175 * h / 480)
-            self.lbl6.move(680 * w / 800, 320 * h / 480)
+            self.lbl3.move(400 * w / 800, 230 * h / 480)
+            # self.lbl4.move(540 * w / 800, 25 * h / 480)
+            # self.lbl5.move(595 * w / 800, 175 * h / 480)
+            # self.lbl6.move(680 * w / 800, 320 * h / 480)
 
             #UNITS spacings & sizings
-            self.speedUnit.move(175 * w / 800, 150 * h / 480)
-            self.rangeUnit.move(175 * w / 800, 395 * h / 480)
-            self.battUnit.move(505 * w / 800, 278 * h / 480)
-            self.tempUnit.move(740 * w / 800, 92 * h / 480)
-            self.currentUnit.move(740 * w / 800, 242 * h / 480)
-            self.powerUnit.move(740 * w / 800, 387 * h / 480)
+            self.speedUnit.move(200 * w / 800, 150 * h / 480)
+            self.rangeUnit.move(200 * w / 800, 395 * h / 480)
+            self.battUnit.move(650 * w / 800, 278 * h / 480)
+            # self.tempUnit.move(740 * w / 800, 92 * h / 480)
+            # self.currentUnit.move(740 * w / 800, 242 * h / 480)
+            # self.powerUnit.move(740 * w / 800, 387 * h / 480)
 
             #BATTERY spacing & sizing
-            self.batteryImage.move(300 * w / 800, 115 * h / 480)
+            self.batteryImage.move(550 * w / 800, 115 * h / 480)
             
             #keep track of new dimensions
             self.prevH = h
