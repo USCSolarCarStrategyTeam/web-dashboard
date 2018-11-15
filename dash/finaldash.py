@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-from PyQt5.QtWidgets import (QWidget, QPushButton, QFrame, 
+from PyQt5.QtWidgets import (QWidget, QPushButton, QFrame,
     QColorDialog, QApplication, QLabel, QDesktopWidget)
 from PyQt5.QtGui import QColor, QPainter, QFont, QPixmap
 from PyQt5.QtCore import Qt, QTime, QTimer
@@ -12,10 +12,10 @@ from random import randint
 
 
 class Dashboard(QWidget):
-    
+
     def __init__(self):
         super(Dashboard, self).__init__()
-        
+
         self.initUI()
         self.timer = QTimer()
 
@@ -24,13 +24,13 @@ class Dashboard(QWidget):
         self.timer.timeout.connect(self.getBatt)
         # self.timer.timeout.connect(self.getTemp)
         # self.timer.timeout.connect(self.getCurrent)
-        # self.timer.timeout.connect(self.getPower)       
+        # self.timer.timeout.connect(self.getPower)
         self.timer.timeout.connect(self.adjustScaling)
 
         self.timer.start(1000)
-        
-        
-    def initUI(self):    
+
+
+    def initUI(self):
 
         #Labels
         self.lbl1 = QLabel("Current Speed", self)
@@ -76,7 +76,7 @@ class Dashboard(QWidget):
         #Units
         self.speedUnit = QLabel("mph", self)
         self.speedUnit.move(500, 150)
-        
+
         self.rangeUnit = QLabel("mi.", self)
         self.rangeUnit.move(500, 395)
 
@@ -149,10 +149,10 @@ class Dashboard(QWidget):
 
         #Battery image
         battMap = QPixmap("batteries/battery24.png")
-        battMap = battMap.scaledToHeight(150)
+        battMap = battMap.scaledToHeight(250)
         self.batteryImage = QLabel(self)
         self.batteryImage.setPixmap(battMap)
-        self.batteryImage.move(300, 115)
+        self.batteryImage.move(250, 50)
 
 
         #Configure dash color
@@ -165,28 +165,28 @@ class Dashboard(QWidget):
 
 
         #Dimensions
-        self.setGeometry(300, 300, 800, 480)    #as opposed to 720x480
+        self.setGeometry(400, 400, 900, 580)    #as opposed to 720x480
         self.prevH = self.height()
         self.prevW = self.width()
-        self.battScale = 96
+        self.battScale = 250
 
 
         #Display!
         self.setWindowTitle('Solar Car Dash')
         self.center()
         self.show()
-      
+
     def keyPressEvent(self, e):
-        
+
         if e.key() == Qt.Key_Escape:
             self.close()
-            
+
     def center(self):
-        
+
         qr = self.frameGeometry()
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
-        self.move(qr.topLeft())    
+        self.move(qr.topLeft())
 
     def getSpeed(self):
 
@@ -238,7 +238,7 @@ class Dashboard(QWidget):
 
         #only update scaling if window size has changed recently
         if (w != prevW or h != prevH):
-            
+
             #VALUES spacings & sizings
             self.currSpeed.move(25 * w / 800, 55 * h / 480)
             self.currRange.move(25 * w / 800, 300 * h / 480)
@@ -246,7 +246,7 @@ class Dashboard(QWidget):
             # self.currTemp.move(660 * w / 800, 55 * h / 480)
             # self.currCurrent.move(660 * w / 800, 205 * h / 480)
             # self.currPower.move(660 * w / 800, 350 * h / 480)
-            
+
             #LABELS spacings & sizings
             self.lbl1.move(25 * w / 800, 25 * h / 480)
             self.lbl2.move(25 * w / 800, 270 * h / 480)
@@ -264,15 +264,15 @@ class Dashboard(QWidget):
             # self.powerUnit.move(740 * w / 800, 387 * h / 480)
 
             #BATTERY spacing & sizing
-            self.batteryImage.move(550 * w / 800, 115 * h / 480)
-            
+            self.batteryImage.move(400 * w / 800, 60 * h / 480)
+
             #keep track of new dimensions
             self.prevH = h
             self.prevW = w
-                
-        
+
+
 if __name__ == '__main__':
-    
+
     app = QApplication(sys.argv)
     dash = Dashboard()
     sys.exit(app.exec_())
